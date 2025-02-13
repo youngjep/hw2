@@ -12,19 +12,33 @@ std::string convToLower(std::string src)
 }
 
 /** Complete the code to convert a string containing a rawWord
-    to a set of words based on the criteria given in the assignment **/
+    to a set of words based on the criteria given in the assignment
+    -> taking a string of many words and splitting them into individual keywords
+**/
 std::set<std::string> parseStringToWords(string rawWords)
 {
+    set<string> keywords;
 
+    size_t lastIndex = 0;
 
-
-
-
-
-
-
-
-
+    for (size_t i = 0; i < rawWords.length(); i++) 
+    {
+        if ((rawWords[i] >= 48 && rawWords[i] <= 57)
+            || (rawWords[i] >= 65 && rawWords[i] <= 90)
+                || (rawWords[i] >= 97 && rawWords[i] <= 122))
+        {
+            
+        }
+        else 
+        {
+            if (lastIndex != i) 
+            {
+                keywords.insert(rawWords.substr(lastIndex, i - lastIndex));
+            }
+            lastIndex = i + 1;
+        }
+    }
+    return keywords;
 }
 
 /**************************************************

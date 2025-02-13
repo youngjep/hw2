@@ -20,15 +20,15 @@ void displayProducts(vector<Product*>& hits);
 
 int main(int argc, char* argv[])
 {
+
     if(argc < 2) {
         cerr << "Please specify a database file" << endl;
         return 1;
     }
-
-    /****************
-     * Declare your derived DataStore object here replacing
-     *  DataStore type to your derived type
-     ****************/
+    
+    // Declare your derived DataStore object here replacing
+    // DataStore type to your derived type
+    
     DataStore ds;
     
 
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
                 }
                 done = true;
             }
-	    /* Add support for other commands here */
+	    //Add support for other commands here
 
 
 
@@ -112,7 +112,6 @@ int main(int argc, char* argv[])
         }
 
     }
-    return 0;
 }
 
 void displayProducts(vector<Product*>& hits)
