@@ -31,7 +31,7 @@ std::set<std::string> parseStringToWords(string rawWords)
         }
         else 
         {
-            if (lastIndex != i) 
+            if (lastIndex != i && i - lastIndex > 1)
             {
                 keywords.insert(rawWords.substr(lastIndex, i - lastIndex));
             }

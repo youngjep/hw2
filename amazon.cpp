@@ -5,13 +5,17 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <queue>
+
 #include "product.h"
 #include "db_parser.h"
+#include "mydatastore.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
 
 using namespace std;
-struct ProdNameSorter {
+struct ProdNameSorter { //OH this is FUNCTOR
     bool operator()(Product* p1, Product* p2) {
         return (p1->getName() < p2->getName());
     }
@@ -29,11 +33,7 @@ int main(int argc, char* argv[])
     // Declare your derived DataStore object here replacing
     // DataStore type to your derived type
     
-    DataStore ds;
-    
-
-    // THIS IS A TEST COMMAND
-
+    MyDataStore ds;
 
     // Instantiate the individual section and product parsers we want
     ProductSectionParser* productSectionParser = new ProductSectionParser;
@@ -52,6 +52,18 @@ int main(int argc, char* argv[])
         cerr << "Error parsing!" << endl;
         return 1;
     }
+
+    ////////////////////////////////////////////////////////
+
+    map<string, queue<Product*>> cart;
+
+    for (int i = 0; i < ds.getUsers().size(); ++i)
+    {
+        string lowered = convToLower(ds.getUsers()[i]->getName());
+        cart.emplace(lowered, queue<Product*>());
+    }
+
+    ////////////////////////////////////////////////////////
 
     cout << "=====================================" << endl;
     cout << "Menu: " << endl;
@@ -101,12 +113,97 @@ int main(int argc, char* argv[])
                 }
                 done = true;
             }
-	    //Add support for other commands here
+            else if (cmd == "ADD")
+            {
+                //hits
+                string username;
+                int hitId;
+                if(ss >> username >> hitId)
+                {
+                    username = convToLower(username);
+                    if (cart.find(username) != cart.end())
+                    {
+                        if (hitId <= hits.size() && hitId > 0) // 1, 2, ..
+                        {
+                            cart[username].push(hits[hitId - 1]);
+                            cout << "Item added!" << endl;
+                        }
+                        else cout << "Invalid Item" << endl;
+                    }
+                    else cout << "Username not found" << endl;
 
+                }
+                else cout << "Wrong username and id input" << endl;
+            }
+            else if (cmd == "VIEWCART")
+            {
+                string username;
+                if (ss >> username)
+                {
+                    username = convToLower(username);
+                    if (cart.find(username) != cart.end())
+                    {
+                        cout << "Username: " << username << endl;
+                        queue<Product*> tempCart = cart[username];
+                        int index = 0;
+                        while (!tempCart.empty())
+                        {
+                            if (tempCart.front() != nullptr) {
+                                index++;
+                                cout << index << ": " << tempCart.front()->getName() << endl;
+                            }
+                            tempCart.pop();
+                        }
+                    }
+                    else cout << "Username not found" << endl;
 
+                }
+                else cout << "Wrong username input" << endl;
 
+            }
+            else if (cmd == "BUYCART")
+            {
+                string username;
+                float total = 0.0;
+                if (ss >> username)
+                {
+                    username = convToLower(username);
+                    if (cart.find(username) != cart.end())
+                    {
+                        User* user = ds.getUser(username);
 
-            else {
+                        queue<Product*> remainingItems;
+
+                        while (!cart[username].empty())
+                        {
+                            if (user->getBalance() < cart[username].front()->getPrice())
+                            {
+                                cout << "no enough balance!" << endl;
+                                remainingItems.push(cart[username].front());
+                            }
+                            else if (cart[username].front()->getQty() <= 0)
+                            {
+                                cout << "no more items in stock!" << endl;
+                                remainingItems.push(cart[username].front());
+                            }
+                            else
+                            {
+                                cart[username].front()->subtractQty(1);
+                                user->deductAmount(cart[username].front()->getPrice());
+                                total += cart[username].front()->getPrice();
+                            }
+
+                            cart[username].pop();
+                        }
+
+                        cart[username] = remainingItems;
+                    }
+
+                    cout << "Your spend is total: " << total << endl;
+                }
+            }
+            else
+            {
                 cout << "Unknown command" << endl;
             }
         }

@@ -3,7 +3,7 @@
 #include "product_parser.h"
 #include "book.h"
 #include "clothing.h"
-#include "movie.h" //TODOs
+#include "movie.h"
 #include "util.h"
 using namespace std;
 
@@ -127,11 +127,15 @@ std::string ProductBookParser::categoryID()
 /**
  * Your job to fill in the code to create a new book product
  * using the data members in this class and the parent ProductParser class
+ * 
+ * For each of the derived types you will need to complete the makeProduct() member function
+ *  of each of these classes to instantiate an appropriate product object for the given category.
  */
 Product* ProductBookParser::makeProduct()
 {
+    Product* instance = new Book("book", prodName_, price_, qty_, isbn_, author_);
 
-
+    return instance;
 }
 
 
@@ -185,9 +189,9 @@ std::string ProductClothingParser::categoryID()
  */
 Product* ProductClothingParser::makeProduct()
 {
+    Product* instance = new Clothing("clothing", prodName_, price_, qty_, size_, brand_);
 
-
-
+    return instance;
 }
 
 
@@ -245,6 +249,7 @@ std::string ProductMovieParser::categoryID()
  */
 Product* ProductMovieParser::makeProduct()
 {
+    Product* instance = new Movie("movie", prodName_, price_, qty_, genre_, rating_);
 
-
+    return instance;
 }
