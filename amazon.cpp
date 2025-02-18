@@ -115,22 +115,24 @@ int main(int argc, char* argv[])
             }
             else if (cmd == "ADD")
             {
-                //hits
                 string username;
                 int hitId;
                 if(ss >> username >> hitId)
                 {
                     username = convToLower(username);
-                    if (cart.find(username) != cart.end())
-                    {
-                        if (hitId <= hits.size() && hitId > 0) // 1, 2, ..
-                        {
-                            cart[username].push(hits[hitId - 1]);
-                            cout << "Item added!" << endl;
-                        }
-                        else cout << "Invalid Item" << endl;
+                    if (cart.find(username) == cart.end())
+                    { //THEN add user
+                        ds.addUser(new User(username, 0 , 0));
+                        cart.emplace(username, queue<Product*>());
                     }
-                    else cout << "Username not found" << endl;
+
+                    if (hitId <= hits.size() && hitId > 0) // 1, 2, ..
+                    {
+                        cart[username].push(hits[hitId - 1]);
+                        cout << "Item added!" << endl;
+                    }
+                    else cout << "Invalid Item" << endl;
+
 
                 }
                 else cout << "Wrong username and id input" << endl;
