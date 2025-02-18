@@ -25,6 +25,7 @@ void MyDataStore::addProduct(Product* p)
     {
         string lowered = convToLower(*it);
         productsKeyMap_[lowered].insert(p);
+        //cout << lowered << endl;
     }
 }
 

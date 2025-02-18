@@ -18,6 +18,7 @@ std::string convToLower(std::string src)
 std::set<std::string> parseStringToWords(string rawWords)
 {
     set<string> keywords;
+    //cout << "----- raw: " << rawWords << endl;
 
     size_t lastIndex = 0;
 
@@ -33,11 +34,20 @@ std::set<std::string> parseStringToWords(string rawWords)
         {
             if (lastIndex != i && i - lastIndex > 1)
             {
-                keywords.insert(rawWords.substr(lastIndex, i - lastIndex));
+                string word = rawWords.substr(lastIndex, i - lastIndex);
+                keywords.insert(word);
+                //cout << word << endl;
             }
             lastIndex = i + 1;
         }
     }
+
+    if (lastIndex < rawWords.length() && rawWords.length() - lastIndex > 1) {
+        string word = rawWords.substr(lastIndex);
+        keywords.insert(word);
+        //cout << word << endl;
+    }
+
     return keywords;
 }
 

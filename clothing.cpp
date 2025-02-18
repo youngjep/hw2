@@ -21,6 +21,8 @@ std::set<std::string> Clothing::keywords() const
     set<string> brand = parseStringToWords(brand_);
     keywords = setUnion(keywords, brand);
 
+    //std::cout << "keywords" << std::endl;
+
     return keywords;
 }
 
@@ -28,7 +30,7 @@ std::string Clothing::displayString() const
 {
     stringstream ss;
     ss << name_ << endl;
-    ss << "Size: " << size_ << " Branc: " << brand_ << endl;
+    ss << "Size: " << size_ << " Brand: " << brand_ << endl;
     ss << price_ << " " << qty_ << " left." << endl;
 
     return ss.str();
