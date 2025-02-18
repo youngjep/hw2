@@ -56,7 +56,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string> &terms, int t
                 result = setUnion(result, productsKeyMap_[terms[i]]);
             }
         }
-        else if (i == 0) return {}; //AND and failed to find
+        else if (type == 0) return {}; //AND and failed to find
     }
 
     return std::vector<Product*>(result.begin(), result.end());
