@@ -7,6 +7,13 @@ using namespace std;
 
 MyDataStore::~MyDataStore()
 {
+    for (int i = 0; i < products_.size(); i++) {
+        delete products_[i];
+    }
+    for (int i = 0; i < users_.size(); i++) {
+        delete users_[i];
+    }
+
 }
 
 void MyDataStore::addProduct(Product* p)

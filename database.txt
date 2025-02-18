@@ -7,14 +7,14 @@ Data Abstraction & Problem Solving with C++
 Carrano and Henry
 book
 Great Men and Women of Troy
-19.50
-5
+19.5
+4
 978-000000000-1
 Tommy Trojan
 clothing
 Men's Fitted Shirt
 39.99
-25
+24
 Medium
 J. Crew
 movie
@@ -25,7 +25,7 @@ Drama
 PG
 </products>
 <users>
-aturing 100.00 0
-johnvn 50.00 1
-adal 120.00 1
+aturing 100 0
+johnvn 50 1
+adal 60.51 1
 </users>
