@@ -31,7 +31,7 @@ std::string Book::displayString() const
     stringstream ss;
     ss << name_ << endl;
     ss << "Author: " << author_ << " ISBN: " << isbn_ << endl;
-    ss << price_ << " " << qty_ << " left." << endl;
+    ss << std::setprecision(2) << price_ << " " << qty_ << " left." << endl;
 
     return ss.str();
 }

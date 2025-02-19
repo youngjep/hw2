@@ -30,7 +30,7 @@ std::string Movie::displayString() const
     stringstream ss;
     ss << name_ << endl;
     ss << "Genre: " << genre_ << " Rating: " << rating_ << endl;
-    ss << price_ << " " << qty_ << " left." << endl;
+    ss << std::setprecision(2) << price_ << " " << qty_ << " left." << endl;
 
     return ss.str();
 }

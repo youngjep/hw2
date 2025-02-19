@@ -135,12 +135,12 @@ int main(int argc, char* argv[])
                             cart[username].push(hits[hitId - 1]);
                             cout << "Item added!" << endl;
                         }
-                        else cout << "Invalid Item" << endl;
+                        else cout << "Invalid request" << endl;
                     }
-                    else cout << "Username not found" << endl;
+                    else cout << "Invalid request" << endl;
 
                 }
-                else cout << "Wrong username and id input" << endl;
+                else cout << "Invalid request" << endl;
             }
             else if (cmd == "VIEWCART")
             {
@@ -156,7 +156,8 @@ int main(int argc, char* argv[])
                         {
                             if (tempCart.front() != nullptr) {
                                 index++;
-                                cout << index << ": " << tempCart.front()->displayString() << endl;
+                                cout << "Item " << index << endl;
+                                cout << tempCart.front()->displayString() << endl;
                             }
                             
 
@@ -205,9 +206,12 @@ int main(int argc, char* argv[])
                         }
 
                         cart[username] = remainingItems;
+                        cout << "Your spend is total: " << total << endl;
                     }
-
-                    cout << "Your spend is total: " << total << endl;
+                    else
+                    {
+                        cout << "Invalid username" << endl;
+                    }
                 }
             }
             else
