@@ -1,4 +1,5 @@
 *.o
+*.out
 amazon
 hw2_tests/
 test

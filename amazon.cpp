@@ -115,24 +115,29 @@ int main(int argc, char* argv[])
             }
             else if (cmd == "ADD")
             {
+                //hits
                 string username;
                 int hitId;
                 if(ss >> username >> hitId)
                 {
                     username = convToLower(username);
-                    if (cart.find(username) == cart.end())
+                    /*
+                    if (cart.find(username) == cart.end()) //do we add user?
                     { //THEN add user
                         ds.addUser(new User(username, 0 , 0));
                         cart.emplace(username, queue<Product*>());
                     }
-
-                    if (hitId <= hits.size() && hitId > 0) // 1, 2, ..
+                    */
+                    if (cart.find(username) != cart.end())
                     {
-                        cart[username].push(hits[hitId - 1]);
-                        cout << "Item added!" << endl;
+                        if (hitId <= hits.size() && hitId > 0) // 1, 2, ..
+                        {
+                            cart[username].push(hits[hitId - 1]);
+                            cout << "Item added!" << endl;
+                        }
+                        else cout << "Invalid Item" << endl;
                     }
-                    else cout << "Invalid Item" << endl;
-
+                    else cout << "Username not found" << endl;
 
                 }
                 else cout << "Wrong username and id input" << endl;
@@ -145,22 +150,23 @@ int main(int argc, char* argv[])
                     username = convToLower(username);
                     if (cart.find(username) != cart.end())
                     {
-                        cout << "Username: " << username << endl;
                         queue<Product*> tempCart = cart[username];
                         int index = 0;
                         while (!tempCart.empty())
                         {
                             if (tempCart.front() != nullptr) {
                                 index++;
-                                cout << index << ": " << tempCart.front()->getName() << endl;
+                                cout << index << ": " << tempCart.front()->displayString() << endl;
                             }
+                            
+
                             tempCart.pop();
                         }
                     }
-                    else cout << "Username not found" << endl;
+                    else cout << "Invalid username" << endl;
 
                 }
-                else cout << "Wrong username input" << endl;
+                else cout << "Invalid username" << endl;
 
             }
             else if (cmd == "BUYCART")
